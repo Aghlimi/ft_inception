@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- {% load static %} -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <div class="header">
+                <img src="https://cdn.intra.42.fr/users/0def1edb57ee46b40a74d567fb9e60aa/aghlimi.jpg" width="30px"
+                    height="30px" alt="can't get image">
+                <h1>Aghlimi</h1>
+            </div>
+    
+        </div>
+            <hr>
+            <div class="Graph-container">
+                <div class="about">
+                    <h2>About</h2>
+                    <p>
+                        Hi, I’m Aghlimi, a 20-year-old student at 42. I’m passionate about programming and enjoy working on
+                        low-level
+                        projects that challenge my logic and creativity. Through the core curriculum — from Libft to webserv
+                        — I’ve developed strong
+                        skills in C, C++ and networking, problem-solving, and teamwork. I’m always looking to grow as a
+                        developer and take on new technical challenges.
+    
+    
+                    </p>
+                </div>
+            </div>
+        <div class="image">
+            <img src="https://cdn.intra.42.fr/users/0def1edb57ee46b40a74d567fb9e60aa/aghlimi.jpg" alt="image">
+        </div>
+        <hr>
+        <div class="form">
+            <h3>message to Aghlimi</h3>
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="user" placeholder="Enter your name" required>
+                <input type="text" name="content" placeholder="Enter your message" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

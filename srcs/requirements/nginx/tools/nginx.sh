@@ -7,5 +7,5 @@ openssl req -x509 -nodes \
     -keyout /etc/nginx/ssl/nginx.key \
     -out /etc/nginx/ssl/nginx.crt \
     -subj "/C=MA/ST=Bengurir/L=Bengurir/O=1337/CN=${DOMAIN_NAME}"
-# give nginx other config file in arguments 
-nginx -g "daemon off;" -c /etc/nginx/nginx.conf
+
+nginx -g "daemon off;"

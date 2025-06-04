@@ -2,7 +2,7 @@ FROM debian:trixie-backports
 
 RUN apt update 
 
-RUN apt install php8.4-fpm php-mysqli wget curl -y
+RUN apt install php php8.4-fpm php-mysqli wget curl -y
 
 RUN wget https://wordpress.org/latest.tar.gz
 
@@ -20,13 +20,13 @@ RUN chmod +x wp-cli.phar
 
 RUN mv wp-cli.phar /usr/local/bin/wp
 
-COPY conf/wp-config.php /var/www/html
-
 COPY tools/entrypoint.sh /entrypoint.sh
 
 COPY conf/wp-config.php /var/www/html/wp-config.php
 
 RUN chmod +x /entrypoint.sh
+
+# RUN wp core download --path=/var/www/html --allow-root
 
 EXPOSE 9000
 
