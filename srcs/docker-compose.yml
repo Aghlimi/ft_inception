@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: 
+      context: requirements/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:443"
+    networks:
+      - inception
+    restart: always
+    volumes:
+      - wp-content:/var/www/html
+  mariadb:
+    build: 
+      context: requirements/mariadb
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_PORT: ${WORDPRESS_DB_PORT}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
+  wordpress:
+    build: 
+      context: requirements/wordpress
+      dockerfile: Dockerfile
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_PORT: ${WORDPRESS_DB_PORT}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_MAXTTL: ${REDIS_MAXTTL}
+    depends_on:
+      - mariadb
+      - nginx
+    volumes:
+      - wp-content:/var/www/html
+    restart: always
+    networks:
+      - inception
+    ports:
+      - "8081:9000"
+  adminer:
+    build: 
+      context: requirements/adminer
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    networks:
+      - inception
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+    wp-content:
+        driver_opts:
+          type: none
+          device: ${HOST_HOME}/data/wp-content
+          o: bind
+    db-data:
+        driver_opts:
+          type: none
+          device: ${HOST_HOME}/data/db-data
+          o: bind
+    backup:
+        driver_opts:
+          type: none
+          device: ${HOST_HOME}/data/backup
+          o: bind
