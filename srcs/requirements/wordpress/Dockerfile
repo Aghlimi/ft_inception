@@ -26,8 +26,6 @@ COPY conf/wp-config.php /var/www/html/wp-config.php
 
 RUN chmod +x /entrypoint.sh
 
-# RUN wp core download --path=/var/www/html --allow-root
-
 EXPOSE 9000
 
 CMD ["/entrypoint.sh"]
