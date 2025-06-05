@@ -16,6 +16,7 @@ services:
     build: 
       context: requirements/mariadb
       dockerfile: Dockerfile
+    user: root
     ports:
       - "3306:3306"
     environment:
