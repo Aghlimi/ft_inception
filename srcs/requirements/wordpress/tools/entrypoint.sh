@@ -12,24 +12,16 @@ wp plugin install redis-cache --activate --allow-root --path=/var/www/html
 
 wp redis enable --allow-root --path=/var/www/html
 
-# wp redis enable --allow-root --path="/var/www/html"
-# wp config set DB_NAME ${WORDPRESS_DB_NAME} --allow-root --path=/var/www/html
-# wp config set DB_USER ${WORDPRESS_DB_USER} --allow-root --path=/var/www/html
-# wp config set DB_PASSWORD ${WORDPRESS_DB_PASSWORD} --allow-root --path=/var/www/html
-# wp config set DB_HOST ${WORDPRESS_DB_HOST} --allow-root --path=/var/www/html
-
-wp config create \
-  --dbname="${WORDPRESS_DB_NAME}" \
-  --dbuser="${WORDPRESS_DB_USER}" \
-  --dbpass="${WORDPRESS_DB_PASSWORD}" \
-  --dbhost="${WORDPRESS_DB_HOST}" \
-  --allow-root --path=/var/www/html
-
+wp redis enable --allow-root --path="/var/www/html"
+wp config set DB_NAME ${WORDPRESS_DB_NAME} --allow-root --path=/var/www/html
+wp config set DB_USER ${WORDPRESS_DB_USER} --allow-root --path=/var/www/html
+wp config set DB_PASSWORD ${WORDPRESS_DB_PASSWORD} --allow-root --path=/var/www/html
+wp config set DB_HOST ${WORDPRESS_DB_HOST} --allow-root --path=/var/www/html
 
 wp config set WP_REDIS_HOST ${REDIS_HOST} --allow-root --path=/var/www/html
 wp config set WP_REDIS_PORT ${REDIS_PORT} --allow-root --path=/var/www/html
 wp config set WP_CACHE true --allow-root --path=/var/www/html
 wp config set WP_REDIS_MAXTTL ${REDIS_MAXTTL} --allow-root --path=/var/www/html
-
+# sleep 5
 wp user create ${WORDPRESS_ADMIN_USER} ${WORDPRESS_ADMIN_EMAIL} --role=administrator --user_pass=${WORDPRESS_ADMIN_PASSWORD} --allow-root --path=/var/www/html
 php-fpm8.4 -F
