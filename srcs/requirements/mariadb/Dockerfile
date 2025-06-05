@@ -8,6 +8,8 @@ RUN apt install -y mariadb-server
 
 COPY tools/mariadb.sh /mariadb.sh
 
+COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+
 RUN chmod +x /mariadb.sh
 
 CMD ["/mariadb.sh"]

@@ -6,7 +6,7 @@ services:
       context: requirements/nginx
       dockerfile: Dockerfile
     ports:
-      - "8080:443"
+      - "443:443"
     networks:
       - inception
     restart: always
@@ -62,7 +62,7 @@ services:
       context: requirements/adminer
       dockerfile: Dockerfile
     ports:
-      - "8082:8080"
+      - "8080:8080"
     networks:
       - inception
     restart: always
@@ -79,55 +79,55 @@ services:
       REDIS_PORT: ${REDIS_PORT}
       REDIS_MAXTTL: ${REDIS_MAXTTL}
     restart: always
-  # ftp:
-  #   build: 
-  #     context: requirements/ftp
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8021:21"
-  #     - "10500-10600:10500-10600"
-  #   environment:
-  #     FTP_USER_NAME: ${FTP_USER_NAME}
-  #     FTP_USER_PASSWORD: ${FTP_USER_PASSWORD}
-  #     FTP_USER_HOME: ${FTP_USER_HOME}
-  #   volumes:
-  #     - wp-content:${FTP_USER_HOME}
-  #   networks:
-  #     - inception
-  #   restart: always
-  # website:
-  #   build: 
-  #     context: requirements/website
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8000:8000"
-  #   restart: always
-  #   environment:
-  #     WORDPRESS_DB_PORT: ${WORDPRESS_DB_PORT}
-  #     WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-  #     WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-  #     WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-  #     DJANGO_DB_NAME: ${DJANGO_DB_NAME}
-  #   networks:
-  #     - inception
-  #   depends_on:
-  #     - mariadb
-  # service:
-  #     build: 
-  #       context: requirements/service
-  #       dockerfile: Dockerfile
-  #     restart: always
-  #     networks:
-  #       - inception
-  #     depends_on:
-  #       - mariadb
-  #     environment:
-  #       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-  #       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-  #       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-  #       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
-  #     volumes:
-  #       - backup:/backup
+  ftp:
+    build: 
+      context: requirements/ftp
+      dockerfile: Dockerfile
+    ports:
+      - "8021:21"
+      - "10500-10600:10500-10600"
+    environment:
+      FTP_USER_NAME: ${FTP_USER_NAME}
+      FTP_USER_PASSWORD: ${FTP_USER_PASSWORD}
+      FTP_USER_HOME: ${FTP_USER_HOME}
+    volumes:
+      - wp-content:${FTP_USER_HOME}
+    networks:
+      - inception
+    restart: always
+  website:
+    build: 
+      context: requirements/website
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    restart: always
+    environment:
+      WORDPRESS_DB_PORT: ${WORDPRESS_DB_PORT}
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      DJANGO_DB_NAME: ${DJANGO_DB_NAME}
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+  service:
+      build: 
+        context: requirements/service
+        dockerfile: Dockerfile
+      restart: always
+      networks:
+        - inception
+      depends_on:
+        - mariadb
+      environment:
+        WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+        WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+        WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+        WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      volumes:
+        - backup:/backup
 
 networks:
   inception:

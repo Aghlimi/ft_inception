@@ -16,8 +16,4 @@ EOF
 kill "$mariadb_pid"
 wait "$mariadb_pid" 2>/dev/null
 
-exec mysqld_safe --datadir=/var/lib/mysql --bind-address=0.0.0.0x
-# flags for mysqld_safe:
-# --datadir=/var/lib/mysql: specifies the data directory for MariaDB.
-# --skip-networking=0: allows networking, enabling remote connections.
-# --bind-address=0.0.0.0: allows connections from any IP address.
+exec mysqld_safe

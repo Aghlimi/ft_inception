@@ -34,10 +34,10 @@ clean:
 
 # Clean everything: containers, volumes, networks
 fclean:
-    # rm -rf $(db_data)/* $(wp_data)/* $(backup_data)/*
 	rm -rf $(wp_data) $(backup_data) $(db_data)
 	echo "🔥 Full clean: containers, volumes, networks..."
 	$(COMPOSE) down --rmi local
+	docker builder prune -f
 
 # Show container status
 ps:
