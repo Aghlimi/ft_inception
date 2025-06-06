@@ -6,9 +6,9 @@ NAME=inception
 COMPOSE=docker-compose -f srcs/docker-compose.yml --env-file srcs/.env
 
 # volumes
-db_data=/home/aghlimi/data/db-data
-wp_data=/home/aghlimi/data/wp-content
-backup_data=/home/aghlimi/data/backup
+db_data=/home/aa/data/db-data
+wp_data=/home/aa/data/wp-content
+backup_data=/home/aa/data/backup
 
 # Default target
 all: up

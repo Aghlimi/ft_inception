@@ -55,8 +55,6 @@ services:
     restart: always
     networks:
       - inception
-    ports:
-      - "8081:9000"
   adminer:
     build: 
       context: requirements/adminer
@@ -73,7 +71,7 @@ services:
     networks:
       - inception
     ports:
-      - "6380:6379"
+      - "6379:6379"
     environment:
       REDIS_HOST: ${REDIS_HOST}
       REDIS_PORT: ${REDIS_PORT}
@@ -84,14 +82,16 @@ services:
       context: requirements/ftp
       dockerfile: Dockerfile
     ports:
-      - "8021:21"
+      - "21:21"
       - "10500-10600:10500-10600"
     environment:
       FTP_USER_NAME: ${FTP_USER_NAME}
-      FTP_USER_PASSWORD: ${FTP_USER_PASSWORD}
+      FTP_USER_PASS: ${FTP_USER_PASS}
       FTP_USER_HOME: ${FTP_USER_HOME}
     volumes:
       - wp-content:${FTP_USER_HOME}
+    depends_on:
+      - wordpress
     networks:
       - inception
     restart: always
@@ -107,7 +107,6 @@ services:
       WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      DJANGO_DB_NAME: ${DJANGO_DB_NAME}
     networks:
       - inception
     depends_on:

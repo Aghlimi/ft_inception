@@ -87,22 +87,28 @@ WSGI_APPLICATION = 'inception.wsgi.application'
 # REDIS_HOST=redis
 # REDIS_PORT=6380
 # REDIS_MAXTTL=3600
-import os
-import sys
-if True:
-    import mariadb
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': os.getenv('DJANGO_DB_NAME'),
-            'USER': os.getenv('WORDPRESS_DB_USER'),
-            'PASSWORD': os.getenv('WORDPRESS_DB_PASSWORD'),
-            'HOST': os.getenv('WORDPRESS_DB_HOST'),
-            'PORT': os.getenv('WORDPRESS_DB_PORT'),
-        }
+# import os
+# import sys
+# if True:
+#     import mariadb
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'NAME': os.getenv('DJANGO_DB_NAME'),
+#             'USER': os.getenv('WORDPRESS_DB_USER'),
+#             'PASSWORD': os.getenv('WORDPRESS_DB_PASSWORD'),
+#             'HOST': os.getenv('WORDPRESS_DB_HOST'),
+#             'PORT': os.getenv('WORDPRESS_DB_PORT'),
+#         }
+#     }
+
+# default database configuration
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-
-
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
