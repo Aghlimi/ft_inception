@@ -47,6 +47,9 @@ services:
       REDIS_HOST: ${REDIS_HOST}
       REDIS_PORT: ${REDIS_PORT}
       REDIS_MAXTTL: ${REDIS_MAXTTL}
+      WORDPRESS_USER_USER: ${WORDPRESS_USER_USER}
+      WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
+      WORDPRESS_USER_PASSWORD: ${WORDPRESS_USER_PASSWORD}
     depends_on:
       - mariadb
       - nginx
@@ -57,7 +60,7 @@ services:
       - inception
   adminer:
     build: 
-      context: requirements/adminer
+      context: requirements/bonus/adminer
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
@@ -66,7 +69,7 @@ services:
     restart: always
   redis:
     build: 
-      context: requirements/redis
+      context: requirements/bonus/redis
       dockerfile: Dockerfile
     networks:
       - inception
@@ -79,11 +82,10 @@ services:
     restart: always
   ftp:
     build: 
-      context: requirements/ftp
+      context: requirements/bonus/ftp
       dockerfile: Dockerfile
     ports:
       - "21:21"
-      - "10500-10600:10500-10600"
     environment:
       FTP_USER_NAME: ${FTP_USER_NAME}
       FTP_USER_PASS: ${FTP_USER_PASS}
@@ -97,7 +99,7 @@ services:
     restart: always
   website:
     build: 
-      context: requirements/website
+      context: requirements/bonus/website
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
@@ -113,12 +115,15 @@ services:
       - mariadb
   service:
       build: 
-        context: requirements/service
+        context: requirements/bonus/service
         dockerfile: Dockerfile
       restart: always
       networks:
         - inception
       depends_on:
+        - nginx
+        - wordpress
+        - website
         - mariadb
       environment:
         WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}

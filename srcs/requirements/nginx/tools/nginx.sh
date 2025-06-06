@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+
 rm -f /etc/nginx/site-available/default
 
 openssl req -x509 -nodes \
