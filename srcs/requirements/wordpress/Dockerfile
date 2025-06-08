@@ -16,6 +16,4 @@ COPY conf/wp-config.php /wp-config.php
 
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 9000
-
 CMD ["/entrypoint.sh"]

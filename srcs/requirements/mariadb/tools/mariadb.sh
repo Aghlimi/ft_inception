@@ -13,7 +13,7 @@ CREATE USER IF NOT EXISTS '${WORDPRESS_DB_USER}'@'%' IDENTIFIED BY '${WORDPRESS_
 GRANT ALL PRIVILEGES ON \`${WORDPRESS_DB_NAME}\`.* TO '${WORDPRESS_DB_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
-kill -9 "$mariadb_pid"
+kill "$mariadb_pid"
 wait "$mariadb_pid" 2>/dev/null
 
 exec mysqld_safe

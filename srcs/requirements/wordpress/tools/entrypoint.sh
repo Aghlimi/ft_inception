@@ -16,7 +16,7 @@ wp config set DB_HOST ${WORDPRESS_DB_HOST} --allow-root --path=/var/www/html
 
 
 wp core install \
-  --url="https://aghlimi.42.fr" \
+  --url="https://"${WORDPRESS_DOMAIN} \
   --title="My Website" \
   --admin_user="${WORDPRESS_ADMIN_USER}" \
   --admin_password="${WORDPRESS_ADMIN_PASSWORD}" \
@@ -38,5 +38,5 @@ wp config set WP_CACHE true --allow-root --path=/var/www/html
 wp config set WP_REDIS_MAXTTL ${REDIS_MAXTTL} --allow-root --path=/var/www/html
 
 wp redis enable --allow-root --path=/var/www/html
-
+chmod -R 777 /var/www/html
 php-fpm8.4 -F
