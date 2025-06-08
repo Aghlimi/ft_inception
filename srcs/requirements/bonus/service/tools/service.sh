@@ -15,6 +15,4 @@ chmod +x /backup.sh
 
 echo "0 0 */30 * * /backup.sh" > /etc/cron.d/wordpress_backup
 
-service cron stop
-
-service cron start
+cron -f 

@@ -2,6 +2,8 @@ version: '3.8'
 
 services:
   nginx:
+    container_name: nginx
+    image: nginx  
     build: 
       context: requirements/nginx
       dockerfile: Dockerfile
@@ -12,7 +14,10 @@ services:
     restart: always
     volumes:
       - wp-content:/var/www/html
+
   mariadb:
+    container_name: mariadb
+    image: mariadb
     build: 
       context: requirements/mariadb
       dockerfile: Dockerfile
@@ -29,7 +34,10 @@ services:
     networks:
       - inception
     restart: always
+
   wordpress:
+    container_name: wordpress
+    image: wordpress
     build: 
       context: requirements/wordpress
       dockerfile: Dockerfile
@@ -48,6 +56,7 @@ services:
       WORDPRESS_USER_USER: ${WORDPRESS_USER_USER}
       WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
       WORDPRESS_USER_PASSWORD: ${WORDPRESS_USER_PASSWORD}
+      WORDPRESS_DOMAIN: ${WORDPRESS_DOMAIN}
     depends_on:
       - mariadb
       - nginx
@@ -56,7 +65,10 @@ services:
     restart: always
     networks:
       - inception
+
   adminer:
+    container_name: adminer
+    image: adminer
     build: 
       context: requirements/bonus/adminer
       dockerfile: Dockerfile
@@ -65,7 +77,10 @@ services:
     networks:
       - inception
     restart: always
+
   redis:
+    container_name: redis
+    image: redis
     build: 
       context: requirements/bonus/redis
       dockerfile: Dockerfile
@@ -76,7 +91,10 @@ services:
       REDIS_PORT: ${REDIS_PORT}
       REDIS_MAXTTL: ${REDIS_MAXTTL}
     restart: always
+
   ftp:
+    container_name: ftp
+    image: ftp
     build: 
       context: requirements/bonus/ftp
       dockerfile: Dockerfile
@@ -93,7 +111,10 @@ services:
     networks:
       - inception
     restart: always
+
   website:
+    container_name: website
+    image: website
     build: 
       context: requirements/bonus/website
       dockerfile: Dockerfile
@@ -109,42 +130,45 @@ services:
       - inception
     depends_on:
       - mariadb
+
   service:
-      build: 
-        context: requirements/bonus/service
-        dockerfile: Dockerfile
-      restart: always
-      networks:
-        - inception
-      depends_on:
-        - wordpress
-        - website
-        - mariadb
-      environment:
-        WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-        WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-        WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-        WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
-      volumes:
-        - backup:/backup
+    container_name: service
+    image: service
+    build: 
+      context: requirements/bonus/service
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - inception
+    depends_on:
+      - wordpress
+      - website
+      - mariadb
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+    volumes:
+      - backup:/backup
 
 networks:
   inception:
     driver: bridge
 
 volumes:
-    wp-content:
-        driver_opts:
-          type: none
-          device: ${HOST_HOME}/data/wp-content
-          o: bind
-    db-data:
-        driver_opts:
-          type: none
-          device: ${HOST_HOME}/data/db-data
-          o: bind
-    backup:
-        driver_opts:
-          type: none
-          device: ${HOST_HOME}/data/backup
-          o: bind
+  wp-content:
+    driver_opts:
+      type: none
+      device: ${HOST_HOME}/data/wp-content
+      o: bind
+  db-data:
+    driver_opts:
+      type: none
+      device: ${HOST_HOME}/data/db-data
+      o: bind
+  backup:
+    driver_opts:
+      type: none
+      device: ${HOST_HOME}/data/backup
+      o: bind
