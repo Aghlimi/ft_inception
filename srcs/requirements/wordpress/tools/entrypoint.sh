@@ -24,17 +24,19 @@ wp core install \
   --allow-root \
   --path=/var/www/html
 
+wp plugin install redis-cache --activate --allow-root --path=/var/www/html
+
 wp user create "${WORDPRESS_USER_USER}" "${WORDPRESS_USER_EMAIL}" \
   --user_pass="${WORDPRESS_USER_PASSWORD}" \
   --role=subscriber \
   --allow-root \
   --path=/var/www/html
 
-wp plugin install redis-cache --activate --allow-root --path=/var/www/html
-wp redis enable --allow-root --path="/var/www/html"
 wp config set WP_REDIS_HOST ${REDIS_HOST} --allow-root --path=/var/www/html
 wp config set WP_REDIS_PORT ${REDIS_PORT} --allow-root --path=/var/www/html
 wp config set WP_CACHE true --allow-root --path=/var/www/html
 wp config set WP_REDIS_MAXTTL ${REDIS_MAXTTL} --allow-root --path=/var/www/html
+
+wp redis enable --allow-root --path=/var/www/html
 
 php-fpm8.4 -F

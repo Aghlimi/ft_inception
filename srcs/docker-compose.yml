@@ -121,7 +121,6 @@ services:
       networks:
         - inception
       depends_on:
-        - nginx
         - wordpress
         - website
         - mariadb
