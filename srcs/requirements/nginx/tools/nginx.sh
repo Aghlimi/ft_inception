@@ -6,6 +6,6 @@ openssl req -x509 -nodes \
     -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/nginx.key \
     -out /etc/nginx/ssl/nginx.crt \
-    -subj "/C=MA/ST=Bengurir/L=Bengurir/O=1337/CN=${WORDPRESS_DOMAIN}" 
+    -subj "/C=${C}/ST=${ST}/L=${L}/O=${O}/CN=${WORDPRESS_DOMAIN}" 
 
 nginx -g "daemon off;"
